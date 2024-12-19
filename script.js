@@ -1,31 +1,34 @@
-// Récupérer tous les éléments draggable et les zones de drop
-const draggableElems = document.querySelectorAll('.cover'); // Appliquer à .cover
+// Sélectionner tous les éléments draggables (covers) et zones de dépôt
+const draggableElems = document.querySelectorAll('.cover'); // Déclare une seule fois
 const dropZones = document.querySelectorAll('.category');
 
-// Initialiser Draggabilly pour chaque cover
+// Initialisation du drag pour chaque élément
 draggableElems.forEach((elem) => {
     const draggie = new Draggabilly(elem, {
-        containment: document.body, // Limite à la fenêtre
+        containment: document.body, // Permet de déplacer dans toute la fenêtre
     });
 
-    // Gestion de l'événement `dragEnd`
+    // Événement déclenché lorsqu'on termine de déplacer un élément
     draggie.on('dragEnd', function () {
+        // Récupère les dimensions et position de l'élément draggable
         const { left, top, width, height } = elem.getBoundingClientRect();
 
-        let dropped = false; // Indique si l'élément a été déposé dans une drop zone
+        let dropped = false; // Indique si l'élément a été déposé dans une zone valide
 
-        dropZones.forEach((zone) => {
-            const { left: zl, top: zt, width: zw, height: zh } = zone.getBoundingClientRect();
+        // Parcourir toutes les zones de dépôt
+        dropZones.forEach((dropZone) => {
+            // Récupère les dimensions et position de la zone actuelle
+            const { left: zl, top: zt, width: zw, height: zh } = dropZone.getBoundingClientRect();
 
-            // Vérifie si le centre de l'élément est dans une zone
+            // Vérifie si l'élément se trouve dans cette zone
             if (
-                left + width / 2 > zl &&
+                left + width / 2 > zl && // Centre de l'élément dans la largeur
                 left + width / 2 < zl + zw &&
-                top + height / 2 > zt &&
+                top + height / 2 > zt && // Centre de l'élément dans la hauteur
                 top + height / 2 < zt + zh
             ) {
-                // Déplacer le cadre dans la zone
-                zone.appendChild(elem);
+                // Ajouter l'élément dans la zone de dépôt
+                dropZone.appendChild(elem);
                 elem.style.position = 'relative'; // Réinitialiser la position
                 elem.style.left = '0';
                 elem.style.top = '0';
@@ -33,9 +36,9 @@ draggableElems.forEach((elem) => {
             }
         });
 
-        // Si l'élément n'est pas déposé dans une zone, il retourne à sa position initiale
+        // Si l'élément n'a pas été déposé dans une zone valide
         if (!dropped) {
-            draggie.setPosition(0, 0); // Retourner à l'état initial
+            draggie.setPosition(0, 0); // Retour à sa position initiale
         }
     });
 });
