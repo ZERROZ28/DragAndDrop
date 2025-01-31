@@ -7,16 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <h1>Classement des Covers 🎵</h1>
     <section id="categories">
         <div id="bof" class="category">
             <h2>Bof...</h2>
         </div>
-        <div id="stylé" class="category">
+        <div id="style" class="category">
             <h2>Stylé !</h2>
         </div>
     </section>
-
     <section id="all-covers">
         <h3>Faites glisser les covers dans une catégorie !</h3>
         <div id="cover-pool">
@@ -31,21 +30,8 @@
             <div class="cover"><img class="draggable" src="image/9.png" alt="cover9"></div>
         </div>
     </section>
-
+    
     <script src="https://unpkg.com/draggabilly@3/dist/draggabilly.pkgd.min.js"></script>
     <script src="script.js"></script>
-
-<script>
-    var draggableElems = document.querySelectorAll('.draggable');
-var draggies = []
-for ( var i=0; i < draggableElems.length; i++ ) {
- var draggableElem = draggableElems[i];
-var draggie = new Draggabilly( draggableElem, {
-    containment: '#s1'
-});
-draggies.push( draggie );
-}
-</script>
-
 </body>
 </html>
